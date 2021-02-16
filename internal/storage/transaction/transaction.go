@@ -34,7 +34,7 @@ func (t *transaction) StartTransaction(key string) {
 		t.keyTx[key] = &defVal
 	}
 
-	for ; atomic.SwapInt32(t.keyTx[key], t.swapValue) == t.swapValue; {
+	for atomic.SwapInt32(t.keyTx[key], t.swapValue) == t.swapValue {
 	}
 
 	return

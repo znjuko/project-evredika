@@ -2,7 +2,7 @@ package models
 
 const (
 	EventDelete = "Delete"
-	EventPut = "Put"
+	EventPut    = "Put"
 )
 
 type Event struct {

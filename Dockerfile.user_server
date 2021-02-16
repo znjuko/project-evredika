@@ -16,7 +16,7 @@ WORKDIR /go/src/$APP_PKG_NAME
 COPY ./cmd ./cmd
 COPY ./internal ./internal
 COPY ./pkg ./pkg
-COPY ./vendor ./vendor
+go get ./...
 
 RUN go build -v \
     -o /out/service \

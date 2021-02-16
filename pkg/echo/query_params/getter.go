@@ -24,4 +24,4 @@ func (g *getter) GetInt(ctx echo.Context, name string) (value int) {
 }
 
 // NewQueryGetter ...
-func NewQueryGetter(intDefault int) Getter {return &getter{intDefault: intDefault}}
+func NewQueryGetter(intDefault int) Getter { return &getter{intDefault: intDefault} }
