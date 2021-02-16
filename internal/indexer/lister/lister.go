@@ -53,7 +53,7 @@ func (l *lister) List(skip, limit int) (keys []string) {
 // NewLister ...
 func NewLister() Lister {
 	return &lister{
-		keys:  make([]string, 20),
-		exist: make(map[string]struct{}, 20),
+		keys:  make([]string, 0),
+		exist: make(map[string]struct{}, 0),
 	}
 }

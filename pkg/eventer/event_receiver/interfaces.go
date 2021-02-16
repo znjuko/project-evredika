@@ -6,7 +6,3 @@ type userIndexer interface {
 	PutUser(user *v1.User)
 	DeleteUser(ID string)
 }
-
-type logger interface {
-	Warn(args ...interface{})
-}

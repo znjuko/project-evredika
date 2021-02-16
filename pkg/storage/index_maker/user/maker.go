@@ -1,6 +1,10 @@
 package user
 
-import "fmt"
+import (
+	"strings"
+
+	"github.com/sirupsen/logrus"
+)
 
 type Indexer interface {
 	CreateIndex(id string) (index string)
@@ -8,29 +12,38 @@ type Indexer interface {
 }
 
 type maker struct {
-	format string
-	logger logger
+	suffix string
+	logger *logrus.Logger
 }
 
 func (i *maker) RevertIndex(index string) (id string) {
-	if _, err := fmt.Sscanf(index, i.format, &id); err != nil {
-		i.logger.Warn(
-			"failed to revert index", index,
-			"format", i.format,
-			"error", err,
-		)
-	}
+	id = strings.TrimSuffix(index, i.suffix)
+	i.logger.WithFields(
+		logrus.Fields{
+			"index":  index,
+			"suffix": i.suffix,
+			"id":     id,
+		}).Debug("RevertIndex")
 	return
 }
 
 func (i *maker) CreateIndex(id string) (index string) {
-	return fmt.Sprintf(i.format, id)
+	index = id + i.suffix
+
+	i.logger.WithFields(
+		logrus.Fields{
+			"index":  index,
+			"suffix": i.suffix,
+			"id":     id,
+		}).Debug("CreateIndex")
+
+	return
 }
 
 // NewIndexer ...
-func NewIndexMaker(format string, logger logger) Indexer {
+func NewIndexMaker(suffix string, logger *logrus.Logger) Indexer {
 	return &maker{
-		format: format,
+		suffix: suffix,
 		logger: logger,
 	}
 }

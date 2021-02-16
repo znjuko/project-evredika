@@ -3,6 +3,8 @@ package event_receiver
 import (
 	"encoding/json"
 
+	"github.com/sirupsen/logrus"
+
 	"project-evredika/internal/eventer/models"
 	v1 "project-evredika/pkg/api/v1"
 )
@@ -10,13 +12,13 @@ import (
 type userPutIndexHandler struct {
 	userIndexer userIndexer
 
-	logger logger
+	logger *logrus.Logger
 }
 
 func (u *userPutIndexHandler) Handle(task *models.Metadata) {
-	var user *v1.User
+	user := &v1.User{}
 	if err := json.Unmarshal(task.Data, user); err != nil {
-		u.logger.Warn("failed to unmarshal user data", err)
+		u.logger.WithFields(logrus.Fields{"error": err}).Warn("failed to unmarshall user data")
 		return
 	}
 	u.userIndexer.PutUser(user)
@@ -26,7 +28,7 @@ func (u *userPutIndexHandler) Handle(task *models.Metadata) {
 func NewUserPutIndexHandler(
 	userIndexer userIndexer,
 
-	logger logger,
+	logger *logrus.Logger,
 ) Handler {
 	return &userPutIndexHandler{
 		userIndexer: userIndexer,

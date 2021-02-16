@@ -23,8 +23,3 @@ type storage interface {
 	StartTransaction(key string)
 	StopTransaction(key string)
 }
-
-type logger interface {
-	Error(args ...interface{})
-	Debug(args ...interface{})
-}

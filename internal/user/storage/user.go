@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 
+	"github.com/sirupsen/logrus"
+
 	"project-evredika/internal/storage/data_saver"
 	"project-evredika/internal/user"
 	v1 "project-evredika/pkg/api/v1"
@@ -14,7 +16,7 @@ type userStorage struct {
 	storage    storage
 	indexer    dataIndexer
 	indexMaker indexMaker
-	logger     logger
+	logger     *logrus.Logger
 	bucket     string
 }
 
@@ -29,7 +31,10 @@ func (s *userStorage) CreateUser(ctx context.Context, user *v1.User) (err error)
 	s.storage.StartTransaction(d.Key)
 	defer s.storage.StopTransaction(d.Key)
 
-	s.logger.Debug("created data key", d.Key, "bucket", d.Bucket)
+	s.logger.WithFields(logrus.Fields{
+		"key":    d.Key,
+		"bucket": d.Bucket,
+	}).Debug("create user data")
 
 	if d.B, err = json.Marshal(user); err != nil {
 		return
@@ -51,7 +56,10 @@ func (s *userStorage) DeleteUser(ctx context.Context, ID string) (err error) {
 	s.storage.StartTransaction(i.Key)
 	defer s.storage.StopTransaction(i.Key)
 
-	s.logger.Debug("created data key", i.Key, "bucket", i.Bucket)
+	s.logger.WithFields(logrus.Fields{
+		"key":    i.Key,
+		"bucket": i.Bucket,
+	}).Debug("delete user data")
 
 	if err = s.storage.DeleteData(ctx, i); err != nil {
 		return
@@ -71,7 +79,10 @@ func (s *userStorage) UpdateUser(ctx context.Context, user *v1.User) (err error)
 	s.storage.StartTransaction(d.Key)
 	defer s.storage.StopTransaction(d.Key)
 
-	s.logger.Debug("created data key", d.Key, "bucket", d.Bucket)
+	s.logger.WithFields(logrus.Fields{
+		"key":    d.Key,
+		"bucket": d.Bucket,
+	}).Debug("update user data")
 
 	if d.B, err = json.Marshal(user); err != nil {
 		return
@@ -102,7 +113,7 @@ func NewUserStorage(
 	storage storage,
 	indexer dataIndexer,
 	indexMaker indexMaker,
-	logger logger,
+	logger *logrus.Logger,
 	bucket string,
 ) user.Storage {
 	return &userStorage{

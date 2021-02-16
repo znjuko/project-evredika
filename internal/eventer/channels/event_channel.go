@@ -20,7 +20,7 @@ type eventCh struct {
 
 func (c *eventCh) Send(task *models.Event) {
 	c.mu.RLock()
-	defer c.mu.Unlock()
+	defer c.mu.RUnlock()
 	if !c.closed {
 		c.c <- task
 	}
@@ -31,7 +31,7 @@ func (c *eventCh) Read() chan *models.Event {
 }
 
 func (c *eventCh) Close() {
-	c.mu.RLock()
+	c.mu.Lock()
 	defer c.mu.Unlock()
 	c.closed = true
 	close(c.c)

@@ -24,7 +24,6 @@ const (
 )
 
 type userDelivery struct {
-	logger      logger
 	usecase     usecase
 	queryGetter queryGetter
 }
@@ -104,12 +103,10 @@ func (d *userDelivery) Initiate(server *echo.Echo) {
 
 // NewUserHttpDelivery ...
 func NewUserHttpDelivery(
-	logger logger,
 	usecase usecase,
 	queryGetter queryGetter,
 ) user.Delivery {
 	return &userDelivery{
-		logger:      logger,
 		usecase:     usecase,
 		queryGetter: queryGetter,
 	}

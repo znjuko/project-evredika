@@ -7,10 +7,6 @@ import (
 	"project-evredika/internal/storage/data_saver"
 )
 
-type logger interface {
-	Debug(args ...interface{})
-}
-
 type dataSaver interface {
 	CreateData(ctx context.Context, data *data_saver.Data) (err error)
 	UpdateData(ctx context.Context, data *data_saver.Data) (err error)

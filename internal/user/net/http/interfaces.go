@@ -8,10 +8,6 @@ import (
 	v1 "project-evredika/pkg/api/v1"
 )
 
-type logger interface {
-	Error(args ...interface{})
-}
-
 type usecase interface {
 	CreateUser(ctx context.Context, user *v1.User) (err error)
 	DeleteUser(ctx context.Context, ID string) (err error)

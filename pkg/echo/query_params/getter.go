@@ -12,6 +12,7 @@ type Getter interface {
 
 type getter struct {
 	intDefault int
+	minimal    int
 }
 
 func (g *getter) GetInt(ctx echo.Context, name string) (value int) {
@@ -20,8 +21,17 @@ func (g *getter) GetInt(ctx echo.Context, name string) (value int) {
 		return g.intDefault
 	}
 
+	if value < g.minimal {
+		return g.minimal
+	}
+
 	return value
 }
 
 // NewQueryGetter ...
-func NewQueryGetter(intDefault int) Getter { return &getter{intDefault: intDefault} }
+func NewQueryGetter(intDefault, minimal int) Getter {
+	return &getter{
+		intDefault: intDefault,
+		minimal:    minimal,
+	}
+}

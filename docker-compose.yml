@@ -10,8 +10,8 @@ services:
     ports:
       - "10080:80"
     environment:
-      - PORT=80
-      - KEY_FORMAT=%v.json
+      - PORT=:80
+      - KEY_FORMAT=%s.json
       - BUCKET=common_data/
       - CHANNELS_SIZE=20
       - STORAGE_TYPE=OS

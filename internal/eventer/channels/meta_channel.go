@@ -20,7 +20,7 @@ type metaCh struct {
 
 func (c *metaCh) Send(task *models.Metadata) {
 	c.mu.RLock()
-	defer c.mu.Unlock()
+	defer c.mu.RUnlock()
 	if !c.closed {
 		c.c <- task
 	}
@@ -31,7 +31,7 @@ func (c *metaCh) Read() chan *models.Metadata {
 }
 
 func (c *metaCh) Close() {
-	c.mu.RLock()
+	c.mu.Lock()
 	defer c.mu.Unlock()
 	c.closed = true
 	close(c.c)

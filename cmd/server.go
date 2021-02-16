@@ -31,11 +31,17 @@ import (
 const (
 	swapValue    = 1
 	defaultValue = 0
+	minimalVal   = 0
 )
 
 func main() {
 	logger := logrus.New()
 	logger.SetFormatter(&logrus.JSONFormatter{})
+	logger.SetFormatter(&logrus.TextFormatter{
+		ForceColors:   true,
+		DisableColors: false,
+		FullTimestamp: true,
+	})
 
 	var cfg service_cfg.Config
 	if err := envconfig.Process("", &cfg); err != nil {
@@ -118,9 +124,8 @@ func main() {
 	userUsecase := user_usecase.NewUserUsecase(userStorage)
 	// creating user http/handler
 	userHandler := user_handler.NewUserHttpDelivery(
-		logger,
 		userUsecase,
-		query_params.NewQueryGetter(defaultValue),
+		query_params.NewQueryGetter(defaultValue, minimalVal),
 	)
 
 	// initializing server
@@ -128,6 +133,6 @@ func main() {
 	userHandler.Initiate(server)
 
 	// starting server
-	logger.Debug("starting server at port", cfg.Port)
+	logger.Debugln("starting server at port", cfg.Port)
 	logger.Fatal(server.Start(cfg.Port))
 }
