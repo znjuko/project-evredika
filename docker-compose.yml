@@ -1,0 +1,18 @@
+version: '3.7'
+services:
+  user_server:
+    build:
+      dockerfile: Dockerfile.user_server
+      context: .
+      args:
+        - APP_PKG_NAME=project-evredika
+        - GOOS=linux
+    ports:
+      - "10080:80"
+    environment:
+      - PORT=80
+      - KEY_FORMAT=%v.json
+      - BUCKET=common_data/
+      - CHANNELS_SIZE=20
+      - STORAGE_TYPE=OS
+
