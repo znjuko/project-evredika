@@ -117,10 +117,12 @@ func (s *saver) ListData(ctx context.Context, info *data_saver.Metadata) (data [
 }
 
 func (s *saver) Initiate(ctx context.Context, bucket string) {
-	_, _ = s.client.CreateBucketWithContext(ctx, &s3.CreateBucketInput{
+	resp, err := s.client.CreateBucketWithContext(ctx, &s3.CreateBucketInput{
 		ACL:    aws.String("public-read | public-read-write"),
 		Bucket: aws.String(bucket),
 	})
+	fmt.Println("initiate resp :" ,resp)
+	fmt.Println("initiate err :", err)
 }
 
 func (s *saver) validateDataExist(info data_saver.Metadata) (err error) {

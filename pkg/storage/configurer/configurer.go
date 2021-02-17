@@ -8,7 +8,7 @@ import (
 
 const (
 	OS = "OS"
-	S3 = "s3"
+	S3 = "S3"
 )
 
 type CfgHandler func(ctx context.Context, bucket string) (st data_saver.DataSaver, err error)

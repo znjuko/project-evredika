@@ -14,11 +14,6 @@ import (
 type saver struct{}
 
 func (s *saver) CreateData(_ context.Context, data *data_saver.Data) (err error) {
-	// if err = s.validateDataExist(key); err != nil {
-	// 	return err
-	// }
-
-	// TODO : check if it will solve problem
 	var file *os.File
 	if file, err = os.OpenFile(data.Bucket+data.Key, os.O_RDWR|os.O_CREATE|os.O_EXCL, 0777); err != nil {
 		return
