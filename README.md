@@ -36,22 +36,22 @@ To run server just type into console : 'docker-compose up'
   (Is already set as default) : 
   ``` yaml
       version: '3.7'
-        services:
-            user_server:
-                build:
-                    dockerfile: Dockerfile.user_server
-                    context: .
-                    args:
-                        - APP_PKG_NAME=project-evredika
-                        - GOOS=linux
-                ports:
-                    - "10080:80"
-                environment:
-                    - PORT=:80
-                    - KEY_FORMAT=%s.json
-                    - BUCKET=common_data/
-                    - CHANNELS_SIZE=20
-                    - STORAGE_TYPE=OS
+      services:
+        user_server:
+            build:
+              dockerfile: Dockerfile.user_server
+              context: .
+              args:
+                - APP_PKG_NAME=project-evredika
+                - GOOS=linux
+            ports:
+              - "10080:80"
+            environment:
+              - PORT=:80
+              - KEY_FORMAT=%s.json
+              - BUCKET=common_data/
+              - CHANNELS_SIZE=20
+              - STORAGE_TYPE=OS
   ``` 
 * If you want to up your environment using S3 as your Database, write to docker-compose.yml
   (I got stuck with this version because of network issues; i cant create bucket :/ ) :
