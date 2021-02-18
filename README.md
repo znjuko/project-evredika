@@ -5,7 +5,7 @@
 * Since I decided to store all data in .json format I realized that data receiving 
 would be much faster if it'll be stored in service-cache.  
 * Logrus is used for event-logging.  
-* There are several implementations of using Database : S3 and files in system folder.
+* There are several implementations of using Database : S3 (currently is not working due to network issues w/ local-minio but you can use others S3 storages) and files in system folder.
 
 ### API
 #### Postman
