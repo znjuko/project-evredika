@@ -66,7 +66,7 @@ func main() {
 	}
 
 	// creating data - indexers
-	indexer := user_indexer.NewIndexMaker(cfg.KeyFormat, logger)
+	indexer := user_indexer.NewIndexMaker(cfg.Suffix, logger)
 
 	// creating indexers
 	userIndexer := common.NewUserIndexer(lister.NewLister())

@@ -121,7 +121,7 @@ func (s *saver) Initiate(ctx context.Context, bucket string) {
 		ACL:    aws.String("public-read | public-read-write"),
 		Bucket: aws.String(bucket),
 	})
-	fmt.Println("initiate resp :" ,resp)
+	fmt.Println("initiate resp :", resp)
 	fmt.Println("initiate err :", err)
 }
 

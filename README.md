@@ -48,7 +48,7 @@ To run server just type into console : 'docker-compose up'
               - "10080:80"
             environment:
               - PORT=:80
-              - KEY_FORMAT=%s.json
+              - SUFFIX=.json
               - BUCKET=common_data/
               - CHANNELS_SIZE=20
               - STORAGE_TYPE=OS
@@ -80,7 +80,7 @@ To run server just type into console : 'docker-compose up'
         - "10080:80"  
       environment:
         - PORT=:80
-        - KEY_FORMAT=%s.json
+        - SUFFIX=.json
         - BUCKET=commondata
         - CHANNELS_SIZE=20
         - STORAGE_TYPE=S3
